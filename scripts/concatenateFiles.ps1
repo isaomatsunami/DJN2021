@@ -7,6 +7,6 @@ $mergedCSV = "power_prices_2021.csv"
 Get-ChildItem -Path $targetDirectory | 
     Where-Object {$_.Extension.ToLower() -eq ".csv"} | 
     ForEach-Object{
-        Write-Output "copying...  " + $_.FullName
+        Write-Output "appending...  " + $_.FullName
         cat $_.FullName >> $mergedCSV
     }
