@@ -12,6 +12,6 @@ Get-ChildItem -Path $targetDirectory -Recurse |
     ForEach-Object{
         if($_.Length -gt 1000000){
             Write-Output ("saving as jpg ...  " + $_.Name)
-            magick convert $_ ($collectedDirectory + "/" + ($_.Name -replace ".png",".jpg"))
+            magick convert $_.FullName ($collectedDirectory + "/" + ($_.Name -replace ".png",".jpg"))
         }
     }

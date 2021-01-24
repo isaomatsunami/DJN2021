@@ -1,0 +1,34 @@
+# PNG->JPG変換フォルダを作る
+
+#### デスクトップのフォルダに放り込んだ写真をクリック一発でJPGに変換してくれるスプリプトを作る
+
+PowerShell ISEシェルでデスクトップに移動する
+
+>> cd ~/Desktop
+
+大枠フォルダを作る
+
+>> mkdir JPG変換フォルダ
+>> cd JPG変換フォルダ
+
+放り込むフォルダと変換結果フォルダを作る
+
+>> mkdir PNGs
+>> mkdir JPGs
+
+メモ帳を開き、以下のファイルを作成し、ファイル名「ConvertPNG2JPN.ps1」で保存する。Windowsの場合、
+>> notepad ConvertPNG2JPN.ps1
+とコマンドラインで入力すると、コマンドラインからメモ帳が立ち上がる。
+
+$targetDirectory = "PNGs"
+echo ($PSScriptRoot + "\PNGs")
+Get-ChildItem -Path ($PSScriptRoot + "\" + $targetDirectory) -Recurse | 
+    Where-Object {$_.Extension.ToLower() -eq ".png"} | 
+    ForEach-Object{
+        Write-Output ("converting...  " + $_.FullName)
+        Write-Output ($PSScriptRoot + "\JPGs\" + ($_.Name -replace ".png", ".jpg"))
+        magick convert $_.FullName ($PSScriptRoot + "\JPGs\" + ($_.Name -replace ".png", ".jpg"))
+    }
+
+ファイルを保存し、シェル画面を閉じ、ウインドウ画面に戻る。
+PNGsフォルダにpng写真を入れた状態で、ConvertPNG2JPN.ps1のアイコンを右クリックし、「PwerShellで実行」する。
